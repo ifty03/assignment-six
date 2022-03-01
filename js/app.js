@@ -23,12 +23,12 @@ document.getElementById("search-btn").addEventListener("click",function(){
 const displayPhoneInfo = (phones)=>{
     console.log(phones)
     const container = document.getElementById("container");
-    const twenty = phones.slice(0,20);
-    console.log(twenty)
+    const twentyPhone = phones.slice(0,20);
+    console.log(twentyPhone)
     /* clear container */
     container.textContent="";
 
-    phones.forEach(phone=>{
+    twentyPhone.forEach(phone=>{
         // console.log(phone)
         const div = document.createElement("div");
         div.innerHTML=`
@@ -46,6 +46,16 @@ const displayPhoneInfo = (phones)=>{
         container.appendChild(div);
 
     })
+    /* create see all button */
+    const btn = document.createElement("div");
+    btn.innerHTML=`
+    <button onclick="seeAllPhones('${phones}')" class="py-2 px-5 border-0 btn btn-primary rounded-lg text-white font-semibold">Show All</button>
+    `
+    const seeAllBtn = document.getElementById("seeAllBtn");
+    seeAllBtn.appendChild(btn);
+    
+
+    /* not found area */
     if(container.textContent==""){
         document.getElementById("notFound").style.display="block";
     }
@@ -55,12 +65,14 @@ const displayPhoneInfo = (phones)=>{
     lodingSpinner("none")
 }
 
+/* call phoneApi */
 const PhoneDetils = (id)=>{
     fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
     .then(res=>res.json())
     .then(data=>displayDetils(data))
 }
 
+/* display ditils */
 const displayDetils = (phone)=>{
     console.log(phone)
     const details = document.getElementById("details");
@@ -77,7 +89,6 @@ const displayDetils = (phone)=>{
     if(phone?.data?.others?.Bluetooth == undefined){
         console.log("error hsdkfl")
     }
-
     div.innerHTML=`
     <div class="">
     <div class='d-flex justify-content-center'>
@@ -96,6 +107,4 @@ const displayDetils = (phone)=>{
     </div>
       `
       details.appendChild(div);
-      
-    //   ${phone.data.phone_name}
 }
