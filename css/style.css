@@ -1,5 +1,11 @@
+/* fonts */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@500&family=Lobster+Two:ital@1&family=Poppins:wght@500;600&family=Roboto:wght@500&family=Rokkitt&family=Satisfy&family=Ubuntu:wght@500;700&family=ZCOOL+QingKe+HuangYou&display=swap");
+
+/* utilitis */
+
 body {
   background-color: #ffffffff;
+  font-family: "Poppins", sans-serif;
 }
 
 #notFound {
