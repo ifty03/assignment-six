@@ -1,8 +1,9 @@
 const lodingSpinner=(condition)=>{
     document.getElementById("spinner").style.display=condition;
 }
-/* click Event hendler */
+/* catch searchFeild */
 
+/* click Event hendler */
 document.getElementById("search-btn").addEventListener("click",function(){
     lodingSpinner("block");
     const searchFeild = document.getElementById("search-feild");
@@ -13,7 +14,7 @@ document.getElementById("search-btn").addEventListener("click",function(){
         document.getElementById("notFound").style.display="block";
     }
     else{
-        searchFeild.value = "";
+        // searchFeild.value = "";
         fetch(`https://openapi.programming-hero.com/api/phones?search=${searchFeildValue.toLowerCase()}`)
         .then((res)=>res.json())
         .then((data)=>displayPhoneInfo(data.data))
@@ -23,14 +24,14 @@ document.getElementById("search-btn").addEventListener("click",function(){
 
 /* card append */
 const displayPhoneInfo = (phones)=>{
-    console.log(phones)
+    console.log("this is phone i wont chack",phones)
     const container = document.getElementById("container");
-    const twentyPhone = phones.slice(0,20);
-    console.log(twentyPhone)
+    const showPhone = phones.slice(0,20);
+    console.log(showPhone)
     /* clear container */
     container.textContent="";
 
-    twentyPhone.forEach(phone=>{
+    showPhone.forEach(phone=>{
         // console.log(phone)
         const div = document.createElement("div");
         div.innerHTML=`
@@ -48,26 +49,17 @@ const displayPhoneInfo = (phones)=>{
         container.appendChild(div);
 
     })
-    /* create see all button */
-    const btn = document.createElement("div");
-    btn.innerHTML=`
-    <button onclick="seeAllPhones('${phones}')" class="py-2 px-5 border-0 btn btn-primary rounded-lg text-white font-semibold">Show All</button>
-    `
-    const seeAllBtn = document.getElementById("seeAllBtn");
-    seeAllBtn.appendChild(btn);
-    
-    /* button condision */
-    // if(container.textContent==""){
-        
-    // };
 
+    
     /* not found area */
     if(container.textContent==""){
+        seeAllBtn.style.display="none";
         document.getElementById("notFound").style.display="block";
-        seeAllBtn.textContent="";
     }
     else{
         document.getElementById("notFound").style.display="none";
+        const seeAllBtn = document.getElementById("seeAllBtn");
+        seeAllBtn.style.display="block";
     }
     lodingSpinner("none")
 }
@@ -114,4 +106,39 @@ const displayDetils = (phone)=>{
     </div>
       `
       details.appendChild(div);
+}
+
+/* call displayPhoneInfo for see all phone */
+document.getElementById("seeAllBtn").addEventListener("click",function(){
+    document.getElementById("seeAllBtn").style.display="none";
+    const searchFeild = document.getElementById("search-feild");
+    const searchFeildValue = searchFeild.value;
+    fetch(`https://openapi.programming-hero.com/api/phones?search=${searchFeildValue.toLowerCase()}`)
+    .then((res)=>res.json())
+    .then((data)=>displayAllPhoneInfo(data.data))
+})
+const displayAllPhoneInfo = (phones)=>{
+    const container = document.getElementById("container");
+    const showPhone = phones.slice(20,phones.length);
+    /* clear container */
+
+    showPhone.forEach(phone=>{
+        // console.log(phone)
+        const div = document.createElement("div");
+        div.innerHTML=`
+        <div class="col">
+        <div class="card h-100 shadow stl">
+        <img src="${phone.image}" class="card-img-top px-5 py-2 pt-4" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">${phone.phone_name}</h5>
+          <p>Brand: ${phone.brand}</p>
+          <button onclick="PhoneDetils('${phone.slug}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</button>
+        </div>
+        </div>
+        </div>
+        `
+        container.appendChild(div);
+
+    })
+
 }
