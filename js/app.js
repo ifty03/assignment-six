@@ -139,8 +139,8 @@ const displayAllPhoneInfo = (phones)=>{
         <div class="card-body">
           <h5 class="card-title">${phone.phone_name}</h5>
           <p>Brand: ${phone.brand}</p>
-          <button onclick="PhoneDetils('${phone.slug}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</button>
-        </div>
+          </div>
+          <button onclick="PhoneDetils('${phone.slug}')" class="btn btn-primary detils w-75 mx-auto mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</button>
         </div>
         </div>
         `
