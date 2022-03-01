@@ -21,3 +21,6 @@ body {
 #seeAllBtn {
   display: none;
 }
+.header-title {
+  color: blue;
+}

@@ -84,10 +84,6 @@ const displayDetils = (phone)=>{
         phone.data.releaseDate="No release date found"
       }
 
-    if(phone?.data?.others?.Bluetooth == undefined){
-        console.log("error: Bluetooth is undefined")
-    }
-
     /* append details in modal */
     div.innerHTML=`
     <div class="">
@@ -96,17 +92,28 @@ const displayDetils = (phone)=>{
     </div>
     <div class="ms-4">
     <h6><span class="title">Brand:</span> ${phone.data.brand}</h6>
+    <h5><span class="header-title">Main Features:-</span></h5>
     <h6><span class="title">ChipSet:</span> ${phone.data.mainFeatures.chipSet}</h6>
     <h6><span class="title">Display Size:</span> ${phone.data.mainFeatures.displaySize}</h6>
     <h6><span class="title">Storage:</span> ${phone.data.mainFeatures.storage}</h6>
-    <h6><span class="title">Bluetooth:</span> ${phone?.data?.others?.Bluetooth}</h6>
-
-    <h6><span class="title">ReleaseDate:</span> ${phone.data.releaseDate}</h6>
     <h6><span class="title">Sensors:</span> ${phone.data.mainFeatures.sensors}</h6>
+    <h5><span class="header-title">Others:-</span></h5>
+    <h6><span class="title">Bluetooth:</span> <span class="otherTitle">${phone?.data?.others?.Bluetooth}</span></h6>
+    <h6><span class="title">GPS:</span> <span class="otherTitle">${phone?.data?.others?.GPS}</span></h6>
+    <h6><span class="title">Radio:</span> <span class="otherTitle">${phone?.data?.others?.Radio}</span></h6>
+    <h6><span class="title">ReleaseDate:</span> ${phone.data.releaseDate}</h6>
     </div>
     </div>
       `
       details.appendChild(div);
+
+      /* others information Error handel. */
+      const titles = document.getElementsByClassName("otherTitle");
+      for(const title of titles){
+        if(phone?.data?.others == undefined){
+            title.innerText="This feature does not exist";
+        }
+      }
 }
 
 /* call displayPhoneInfo for all phone */
@@ -124,7 +131,6 @@ const displayAllPhoneInfo = (phones)=>{
     const showPhone = phones.slice(20,phones.length);
 
     showPhone.forEach(phone=>{
-        // console.log(phone)
         const div = document.createElement("div");
         div.innerHTML=`
         <div class="col">
@@ -141,3 +147,4 @@ const displayAllPhoneInfo = (phones)=>{
         container.appendChild(div);
     })
 }
+
