@@ -1,9 +1,9 @@
+/* Catch loding spinner */
 const lodingSpinner=(condition)=>{
     document.getElementById("spinner").style.display=condition;
 }
-/* catch searchFeild */
 
-/* click Event hendler */
+/* click Event hendler for search button*/
 document.getElementById("search-btn").addEventListener("click",function(){
     lodingSpinner("block");
     const searchFeild = document.getElementById("search-feild");
@@ -14,7 +14,6 @@ document.getElementById("search-btn").addEventListener("click",function(){
         document.getElementById("notFound").style.display="block";
     }
     else{
-        // searchFeild.value = "";
         fetch(`https://openapi.programming-hero.com/api/phones?search=${searchFeildValue.toLowerCase()}`)
         .then((res)=>res.json())
         .then((data)=>displayPhoneInfo(data.data))
@@ -22,17 +21,15 @@ document.getElementById("search-btn").addEventListener("click",function(){
 
 }) 
 
-/* card append */
+/*append cards in container */
 const displayPhoneInfo = (phones)=>{
-    console.log("this is phone i wont chack",phones)
     const container = document.getElementById("container");
     const showPhone = phones.slice(0,20);
-    console.log(showPhone)
+    
     /* clear container */
     container.textContent="";
 
     showPhone.forEach(phone=>{
-        // console.log(phone)
         const div = document.createElement("div");
         div.innerHTML=`
         <div class="col">
@@ -47,13 +44,16 @@ const displayPhoneInfo = (phones)=>{
         </div>
         `
         container.appendChild(div);
-
     })
 
     
-    /* not found area */
+    /* not found area & condision*/
     if(container.textContent==""){
         seeAllBtn.style.display="none";
+        const searchFeild = document.getElementById("search-feild");
+        const searchFeildValue = searchFeild.value;
+        const daynamic = document.getElementById("daynamic");
+        daynamic.innerText=`${searchFeildValue}`
         document.getElementById("notFound").style.display="block";
     }
     else{
@@ -71,9 +71,8 @@ const PhoneDetils = (id)=>{
     .then(data=>displayDetils(data))
 }
 
-/* display ditils */
+/* display ditils in modal*/
 const displayDetils = (phone)=>{
-    console.log(phone)
     const details = document.getElementById("details");
     details.textContent="";
     const title =document.getElementById("staticBackdropLabel");
@@ -88,6 +87,8 @@ const displayDetils = (phone)=>{
     if(phone?.data?.others?.Bluetooth == undefined){
         console.log("error: Bluetooth is undefined")
     }
+
+    /* append details in modal */
     div.innerHTML=`
     <div class="">
     <div class='d-flex justify-content-center'>
@@ -108,11 +109,12 @@ const displayDetils = (phone)=>{
       details.appendChild(div);
 }
 
-/* call displayPhoneInfo for see all phone */
+/* call displayPhoneInfo for all phone */
 document.getElementById("seeAllBtn").addEventListener("click",function(){
     document.getElementById("seeAllBtn").style.display="none";
     const searchFeild = document.getElementById("search-feild");
     const searchFeildValue = searchFeild.value;
+    searchFeild.value="";
     fetch(`https://openapi.programming-hero.com/api/phones?search=${searchFeildValue.toLowerCase()}`)
     .then((res)=>res.json())
     .then((data)=>displayAllPhoneInfo(data.data))
@@ -120,7 +122,6 @@ document.getElementById("seeAllBtn").addEventListener("click",function(){
 const displayAllPhoneInfo = (phones)=>{
     const container = document.getElementById("container");
     const showPhone = phones.slice(20,phones.length);
-    /* clear container */
 
     showPhone.forEach(phone=>{
         // console.log(phone)
@@ -138,7 +139,5 @@ const displayAllPhoneInfo = (phones)=>{
         </div>
         `
         container.appendChild(div);
-
     })
-
 }
