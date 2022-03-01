@@ -24,3 +24,7 @@ body {
 .header-title {
   color: blue;
 }
+.detils {
+  border-radius: 15px;
+  font-weight: 600;
+}
