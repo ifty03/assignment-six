@@ -9,6 +9,8 @@ document.getElementById("search-btn").addEventListener("click",function(){
     const searchFeildValue = searchFeild.value;
     if(searchFeildValue==""){
         alert("Please Write somthing !!")
+        lodingSpinner("none");
+        document.getElementById("notFound").style.display="block";
     }
     else{
         searchFeild.value = "";
@@ -54,10 +56,15 @@ const displayPhoneInfo = (phones)=>{
     const seeAllBtn = document.getElementById("seeAllBtn");
     seeAllBtn.appendChild(btn);
     
+    /* button condision */
+    // if(container.textContent==""){
+        
+    // };
 
     /* not found area */
     if(container.textContent==""){
         document.getElementById("notFound").style.display="block";
+        seeAllBtn.textContent="";
     }
     else{
         document.getElementById("notFound").style.display="none";
@@ -87,7 +94,7 @@ const displayDetils = (phone)=>{
       }
 
     if(phone?.data?.others?.Bluetooth == undefined){
-        console.log("error hsdkfl")
+        console.log("error: Bluetooth is undefined")
     }
     div.innerHTML=`
     <div class="">
